@@ -45,18 +45,18 @@ class _HomePageState extends State<HomePage> {
 
     // print('Scan...');
     String futureString;
-    try {
-      futureString = await new QRCodeReader().scan();
-    } catch (e) {
-      futureString = e.toString();
-      print('Error');
-    }
+    // try {
+    //   futureString = await new QRCodeReader().scan();
+    // } catch (e) {
+    //   futureString = e.toString();
+    //   print('Error');
+    // }
 
-    print('FutureStirng: $futureString');
+    // print('FutureStirng: $futureString');
 
-    if(futureString != null) {
-      print('TENEMOS INFORMACIÓN');
-    }
+    // if(futureString != null) {
+    //   print('TENEMOS INFORMACIÓN');
+    // }
     
 
   }
