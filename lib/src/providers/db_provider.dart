@@ -74,4 +74,38 @@ class DBProvider {
   }
 
 
+  // Select - Obtener información
+  Future<ScanModel>getScanId(int id) async {
+    final db = await database;
+    
+    // En este apartado el signo ? es sistituido por los argumentos de whereArgs, que es una lista dinamica
+    // Este retorna una lista de mampas
+    final res = await db.query('Scans', where: 'id = ?', whereArgs: [id]);
+
+    // compruebo que exista un resultado y lo parseo a un json
+    return res.isNotEmpty ? ScanModel.fromJson(res.first) : null;
+  }
+
+
+  // Selecciona todos los scans
+  Future<List<ScanModel>>getTodosScans() async {
+    final db = await database;
+    final res = await db.query('Scans');
+
+    List<ScanModel> list = res.isNotEmpty ? res.map((c) => ScanModel.fromJson(c)).toList() : [];
+
+    return list;
+  }
+
+
+  // Selecciona todos los scans
+  Future<List<ScanModel>>getScansPorTipo(int tipo) async {
+    final db = await database;
+    final res = await db.rawQuery("SELECT * FROM Scans WHERE tipo='$tipo'");
+
+    List<ScanModel> list = res.isNotEmpty ? res.map((c) => ScanModel.fromJson(c)).toList() : [];
+
+    return list;
+  }
+
 }
