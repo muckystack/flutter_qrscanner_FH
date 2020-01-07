@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_qrscanner_fh/src/models/scann_model.dart';
 import 'package:flutter_qrscanner_fh/src/pages/direcciones_page.dart';
 import 'package:flutter_qrscanner_fh/src/pages/mapas_page.dart';
-
+import 'package:flutter_qrscanner_fh/src/providers/db_provider.dart';
 import 'package:qrcode_reader/qrcode_reader.dart';
 
 class HomePage extends StatefulWidget {
@@ -44,7 +45,8 @@ class _HomePageState extends State<HomePage> {
   _scanQR() async{
 
     // print('Scan...');
-    String futureString;
+    // String futureString;
+    String futureString = 'https://fernando-herrera.com';
     // try {
     //   futureString = await new QRCodeReader().scan();
     // } catch (e) {
@@ -54,11 +56,12 @@ class _HomePageState extends State<HomePage> {
 
     // print('FutureStirng: $futureString');
 
-    // if(futureString != null) {
-    //   print('TENEMOS INFORMACIÓN');
-    // }
-    
-
+    if(futureString != null) {
+      print('TENEMOS INFORMACIÓN');
+      // Llamamos el proceso de inserción
+      final scan = ScanModel(valor: futureString);
+      DBProvider.db.nuevoScan(scan);
+    }
   }
 
 
