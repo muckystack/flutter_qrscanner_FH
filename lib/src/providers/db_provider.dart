@@ -1,9 +1,10 @@
 import 'dart:io';
 
-import 'package:flutter_qrscanner_fh/src/models/scann_model.dart';
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:flutter_qrscanner_fh/src/models/scann_model.dart';
+export 'package:flutter_qrscanner_fh/src/models/scann_model.dart';
 
 class DBProvider {
 

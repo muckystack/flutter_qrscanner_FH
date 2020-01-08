@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qrscanner_fh/src/models/scann_model.dart';
 import 'package:flutter_qrscanner_fh/src/pages/direcciones_page.dart';
 import 'package:flutter_qrscanner_fh/src/pages/mapas_page.dart';
 import 'package:flutter_qrscanner_fh/src/providers/db_provider.dart';
