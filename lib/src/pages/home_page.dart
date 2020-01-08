@@ -1,7 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_qrscanner_fh/src/bloc/scans.dart';
+import 'package:flutter_qrscanner_fh/src/models/scann_model.dart';
 import 'package:flutter_qrscanner_fh/src/pages/direcciones_page.dart';
 import 'package:flutter_qrscanner_fh/src/pages/mapas_page.dart';
-import 'package:flutter_qrscanner_fh/src/providers/db_provider.dart';
+import 'package:flutter_qrscanner_fh/src/utils/utils.dart' as utils;
 import 'package:qrcode_reader/qrcode_reader.dart';
 
 class HomePage extends StatefulWidget {
@@ -13,6 +17,8 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
 
+  final scansBloc = new ScansBloc();
+
   int currentIndex = 0;
 
   @override
@@ -23,7 +29,9 @@ class _HomePageState extends State<HomePage> {
         actions: <Widget>[
           IconButton(
             icon: Icon(Icons.delete_forever),
-            onPressed: () {},
+            onPressed: () {
+              scansBloc.borrarScanTODOS();
+            },
           )
         ],
       ),
@@ -59,7 +67,19 @@ class _HomePageState extends State<HomePage> {
       print('TENEMOS INFORMACIÓN');
       // Llamamos el proceso de inserción
       final scan = ScanModel(valor: futureString);
-      DBProvider.db.nuevoScan(scan);
+      scansBloc.agregarScan(scan);
+
+      if(Platform.isIOS) {
+        Future.delayed(Duration(milliseconds: 750), () {
+          utils.abrirScan(scan);
+        });
+      }else {
+        utils.abrirScan(scan);
+      }
+
+      // final scan2 = ScanModel(valor: 'geo:19.4978,-99.1269');
+      // scansBloc.agregarScan(scan2);
+      // DBProvider.db.nuevoScan(scan);
     }
   }
 

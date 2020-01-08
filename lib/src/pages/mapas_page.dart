@@ -1,13 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_qrscanner_fh/src/providers/db_provider.dart';
+import 'package:flutter_qrscanner_fh/src/bloc/scans.dart';
+import 'package:flutter_qrscanner_fh/src/models/scann_model.dart';
+import 'package:flutter_qrscanner_fh/src/utils/utils.dart' as utils;
 
 class MapasPage extends StatelessWidget {
-  const MapasPage({Key key}) : super(key: key);
+  // const MapasPage({Key key}) : super(key: key);
+
+  final scansBloc = new ScansBloc();
 
   @override
   Widget build(BuildContext context) {
-    return FutureBuilder<List<ScanModel>>(
-      future: DBProvider.db.getTodosScans(),
+    return StreamBuilder<List<ScanModel>>(
+      // future: DBProvider.db.getTodosScans(),
+      stream: scansBloc.scansStream,
       builder: (BuildContext context, AsyncSnapshot<List<ScanModel>> snapshot) {
         if(!snapshot.hasData) {
           return Center(child: CircularProgressIndicator());
@@ -28,8 +33,12 @@ class MapasPage extends StatelessWidget {
               // Cambia el color del fondo que aparece cuando se desliza
               color: Colors.red,
             ),
-            onDismissed: (direcction) => DBProvider.db.deleteScan(scans[i].id),
+            // onDismissed: (direcction) => DBProvider.db.deleteScan(scans[i].id),
+            onDismissed: (direcction) => scansBloc.borrarScan(scans[i].id),
             child: ListTile(
+              onTap: () {
+                utils.abrirScan(scans[i]);
+              },
               leading: Icon(Icons.cloud_queue, color: Theme.of(context).primaryColor),
               title: Text(scans[i].valor),
               subtitle: Text('ID: ${scans[i].id}'),
