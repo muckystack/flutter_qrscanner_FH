@@ -24,4 +24,23 @@ class ScansBloc {
     _scansController?.close();
   }
 
+
+  obtenerScans() async {
+    _scansController.sink.add(await DBProvider.db.getTodosScans());
+  }
+
+  agregarScan(ScanModel scan) async {
+    await DBProvider.db.nuevoScanRaw(scan);
+    obtenerScans();
+  }
+
+  borrarScan(int id) async {
+    await DBProvider.db.deleteScan(id);
+    obtenerScans();
+  }
+
+  borrarScanTODOS() async {
+    await DBProvider.db.deleteAll();
+    obtenerScans();
+  }
 }
